@@ -23,36 +23,7 @@ app.get('/submissions', (req, res) => {
   papercall.getSubmissions(1000)
     .then(papercall.retrieveFeedbackIntoSubmissions)
     .then(submissions => {
-      // const submissionsLight = submissions.map(submission => {
-      //   return {
-      //     id: submission.id,
-      //     speakerName: submission.profile.name,
-      //     speakerLocation: submission.profile.location,
-      //     talkName: submission.talk.title,
-      //     feedbacks: submission.feedback.map(feedback => {
-      //       return {
-      //         user: feedback.user.name,
-      //         body: feedback.body,
-      //         creationDate: feedback.created_at
-      //       }
-      //     })
-      //   }
-      // })
-
-      // const submissionsByAuthor = groupBy(submissionsLight, 'speakerName')
-
-      // const submissionsByAuthor2 = Object.keys(submissionsByAuthor).map(function (key) {
-      //   const authorSumissions = submissionsByAuthor[key]
-      //   return {
-      //     speakerName: key,
-      //     hasFeedback: authorSumissions.some(submission => submission.feedbacks !== undefined && submission.feedbacks.length > 0),
-      //     submissions: authorSumissions
-      //   }
-      // })
-
       res.send(submissions)
-      // const jsonString = JSON.stringify(submissionsByAuthor2)
-      // console.log(jsonString)
     })
 })
 

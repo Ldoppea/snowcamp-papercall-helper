@@ -6,10 +6,10 @@ A helper project allowing to list papercall submissions in different ways
 
 Retrieve your API key from your Papercall event : `https://www.papercall.io/events/<eventID>/apidocs`
 
-Add your Papercall API key to `papercall-helper-server\src\papercall\papercall.js`
+Add your Papercall API key to `papercall-helper-server\src\papercall\papercall-api-key.js`
 
 ```javascript
-axios.defaults.headers.common['Authorization'] = 'YOUR_API_KEY'
+module.exports = 'YOUR_API_KEY'
 ```
 
 Run the server
