@@ -2,6 +2,7 @@
   <div class="author">
     <div class="author-header">
       <span><b>{{ authorData.speakerName }}</b> ({{authorData.submissions.length}} submissions)</span>
+      <span class="feedback-indicator" v-if="aknowledgeFeedback && authorData.hasFeedback">received Feedback</span>
     </div>
     <submission v-for="submission in authorData.submissions" :key="submission.id" :submissionData="submission"></submission>
   </div>
@@ -12,7 +13,10 @@ import Submission from '@/components/Submission'
 
 export default {
   name: 'author',
-  props: ['authorData'],
+  props: {
+    authorData: Object,
+    aknowledgeFeedback: Boolean
+  },
   components: {
     Submission
   },
@@ -39,6 +43,11 @@ export default {
     border-left: 1px solid #8b8b8b;
     border-right: 1px solid #8b8b8b;
     background: #eeeeee;
+
+    .feedback-indicator {
+      display: block;
+      float: right;
+    }
   }
 }
 </style>

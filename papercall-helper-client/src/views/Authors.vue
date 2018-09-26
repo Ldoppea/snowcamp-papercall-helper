@@ -2,7 +2,11 @@
   <div class="authors-view">
     <h1>Authors</h1>
 
-    <author v-for="author in submissionsByAuthor" :key="author.speakerName" :authorData="author"></author>
+    <author v-for="author in submissionsByAuthor"
+      :key="author.speakerName"
+      :authorData="author"
+      aknowledgeFeedback>
+    </author>
   </div>
 </template>
 

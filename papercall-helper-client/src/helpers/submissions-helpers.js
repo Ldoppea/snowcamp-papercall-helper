@@ -50,9 +50,7 @@ const submissionToSubmissionLight = (submission) => {
     speakerLocation: submission.profile.location,
     talkName: submission.talk.title,
     tags: submission.tags,
-    languages: submission.tags.filter(tag => {
-      return tag === 'French' || tag === 'English'
-    }),
+    languages: submission.tags.filter(languageTagFilter),
     feedbacks: submission.feedback.map(feedback => {
       return {
         user: feedback.user.name,
