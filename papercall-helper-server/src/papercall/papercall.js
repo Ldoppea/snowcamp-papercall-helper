@@ -1,8 +1,6 @@
 const axios = require('axios')
-const apiKey = require('./papercall-api-key')
 
 axios.defaults.baseURL = 'https://www.papercall.io/api/v1/'
-axios.defaults.headers.common['Authorization'] = apiKey
 
 // Get X submissions from the event
 const getSubmissions = (numberOfSubmissions) => {
