@@ -3,16 +3,16 @@
     <h1>Languages</h1>
 
     <h2 v-if="submissionsNone.length > 0">NO LANGUAGE SET - {{numberOfNoneSubmissions}}</h2>
-    <author v-for="author in submissionsNone" :key="'none' +author.speakerName" :authorData="author"></author>
+    <author v-for="author in submissionsNone" :key="'none' +author.speakerName" :authorData="author" showLanguages></author>
 
     <h2>French - {{numberOfFrenchSubmissions}}</h2>
-    <author v-for="author in submissionsFrench" :key="'french' +author.speakerName" :authorData="author"></author>
+    <author v-for="author in submissionsFrench" :key="'french' +author.speakerName" :authorData="author" showLanguages></author>
 
     <h2>English - {{numberOfEnglishSubmissions}}</h2>
-    <author v-for="author in submissionsEnglish" :key="'english' +author.speakerName" :authorData="author"></author>
+    <author v-for="author in submissionsEnglish" :key="'english' +author.speakerName" :authorData="author" showLanguages></author>
 
     <h2 v-if="submissionsBoth.length > 0">French or English - {{numberOfBothSubmissions}}</h2>
-    <author v-for="author in submissionsBoth" :key="'both' +author.speakerName" :authorData="author"></author>
+    <author v-for="author in submissionsBoth" :key="'both' +author.speakerName" :authorData="author" showLanguages></author>
   </div>
 </template>
 

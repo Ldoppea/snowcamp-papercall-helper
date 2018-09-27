@@ -2,7 +2,8 @@
   <div class="navigator">
     <div id="nav" v-if="isLoaded">
       <router-link to="/">Authors</router-link> |
-      <router-link to="/languages">Languages</router-link>
+      <router-link to="/languages">Languages</router-link> |
+      <router-link to="/tags">Tags</router-link>
     </div>
     <router-view v-if="isLoaded"/>
     <div class="loading-spinner" v-if="!isLoaded">
@@ -28,7 +29,8 @@ export default {
     AtomSpinner
   },
   mounted () {
-    this.getPosts()
+    this.getSubmissions()
+    this.getEvent()
   },
   computed: {
     isLoaded () {
@@ -36,14 +38,25 @@ export default {
     }
   },
   methods: {
-    async getPosts () {
-      console.log('reload')
+    async getSubmissions () {
+      console.log('reload submissions')
       if (this.$store.getters.submissions.length === 0) {
         console.log('load submissions')
         const response = await PapercallService.fetchSubmissions()
 
         this.$store.commit(mutations.INIT_SUBMISSIONS, {
           submissions: response.data
+        })
+      }
+    },
+    async getEvent () {
+      console.log('reload event')
+      if (this.$store.getters.event === undefined) {
+        console.log('load event')
+        const response = await PapercallService.fetchEvent()
+
+        this.$store.commit(mutations.INIT_EVENT, {
+          event: response.data
         })
       }
     }

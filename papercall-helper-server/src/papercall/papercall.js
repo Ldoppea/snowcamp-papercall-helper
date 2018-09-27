@@ -46,7 +46,19 @@ const retrieveFeedbackIntoSubmissions = (submissions) => {
   )
 }
 
+const getEvent = () => {
+  return axios.get(`event`)
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      throw error
+    })
+}
+
 module.exports = {
+  getEvent,
   getSubmissions,
   getSubmissionFeedback,
   retrieveFeedbackIntoSubmission,

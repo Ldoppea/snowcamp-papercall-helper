@@ -4,7 +4,7 @@
       <span><b>{{ authorData.speakerName }}</b> ({{authorData.submissions.length}} submissions)</span>
       <span class="feedback-indicator" v-if="aknowledgeFeedback && authorData.hasFeedback">received Feedback</span>
     </div>
-    <submission v-for="submission in authorData.submissions" :key="submission.id" :submissionData="submission"></submission>
+    <submission v-for="submission in authorData.submissions" :key="submission.id" :submissionData="submission" :showTags="showTags" :showLanguages="showLanguages"></submission>
   </div>
 </template>
 
@@ -15,7 +15,9 @@ export default {
   name: 'author',
   props: {
     authorData: Object,
-    aknowledgeFeedback: Boolean
+    aknowledgeFeedback: Boolean,
+    showTags: Boolean,
+    showLanguages: Boolean
   },
   components: {
     Submission
@@ -43,6 +45,7 @@ export default {
     border-left: 1px solid #8b8b8b;
     border-right: 1px solid #8b8b8b;
     background: #eeeeee;
+    padding: 5px 5px 5px 5px;
 
     .feedback-indicator {
       display: block;

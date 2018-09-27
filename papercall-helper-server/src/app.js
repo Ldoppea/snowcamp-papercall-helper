@@ -10,20 +10,18 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/posts', (req, res) => {
-  res.send(
-    [{
-      title: "Hello World!",
-      description: "Hi there! How are you?"
-    }]
-  )
-})
-
 app.get('/submissions', (req, res) => {
   papercall.getSubmissions(1000)
     .then(papercall.retrieveFeedbackIntoSubmissions)
     .then(submissions => {
       res.send(submissions)
+    })
+})
+
+app.get('/event', (req, res) => {
+  papercall.getEvent()
+    .then(event => {
+      res.send(event)
     })
 })
 
