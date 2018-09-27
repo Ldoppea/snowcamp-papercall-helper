@@ -33,6 +33,43 @@ yarn serve
 
 Then open a browser at : http://localhost:8080/
 
+## Build
+
+In order to build a standalone binary.
+
+Build the client
+
+```
+cd papercall-helper-client
+
+yarn build
+```
+
+Copy `papercall-helper-client/dist/` content to `papercall-helper-server/src/vue-build/`
+
+Build the server
+
+```
+cd papercall-helper-server
+
+node .\pack-for-windows.js
+```
+or
+```
+cd papercall-helper-server
+
+node .\pack-for-macos.js
+```
+
+Run the resulting executable
+
+```
+.\papercall-helper-win.exe --token  <YOUR_API_TOKEN>
+```
+or
+```
+.\papercall-helper-mac --token  <YOUR_API_TOKEN>
+```
 ## Built With
 
 * [Papercall](https://www.papercall.io/)
