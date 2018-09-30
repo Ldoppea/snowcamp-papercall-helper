@@ -3,7 +3,7 @@
     <h1>Official Tags</h1>
 
     <div v-for="tag in submissions" :key="tag.tag" class="tag-container">
-      <div :class="tag.isBad ? 'bad-tag-title' : 'tag-title'">{{tag.tag}}</div>
+      <div :class="tag.isBad ? 'bad-tag-title' : 'tag-title'">{{tag.tag}} ({{tag.count}} submissions)</div>
       <author v-for="author in tag.submissions" :key="tag + '_' + author.speakerName" :authorData="author" showTags></author>
     </div>
   </div>
