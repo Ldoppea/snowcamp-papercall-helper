@@ -8,7 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "args": "^5.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
@@ -21,7 +20,7 @@
   },
   "pkg": {
     "assets": [
-      "src/vue-build/**/*"
+      "src/static/**/*"
     ]
   }
 }

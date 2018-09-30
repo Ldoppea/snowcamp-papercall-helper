@@ -6,12 +6,6 @@ A helper project allowing to list papercall submissions in different ways
 
 Retrieve your API key from your Papercall event : `https://www.papercall.io/events/<eventID>/apidocs`
 
-Add your Papercall API key to `papercall-helper-server\src\papercall\papercall-api-key.js`
-
-```javascript
-module.exports = 'YOUR_API_KEY'
-```
-
 Run the server
 
 ```
@@ -31,11 +25,31 @@ yarn
 yarn serve
 ```
 
-Then open a browser at : http://localhost:8080/
+Then open a browser at : http://localhost:8080/ , set the API key in the displayed input and then click on `load data`
 
-## Build
+## Build for node server
 
-In order to build a standalone binary.
+Retrieve the project on the server
+
+Start the node server
+
+```
+cd papercall-helper-server
+
+yarn start
+```
+
+If needed, update the served website by building the client's project
+
+```
+cd papercall-helper-client
+
+yarn build
+```
+
+## Build for standalone app
+
+In order to build a standalone binary
 
 Build the client
 
@@ -44,8 +58,6 @@ cd papercall-helper-client
 
 yarn build
 ```
-
-Copy `papercall-helper-client/dist/` content to `papercall-helper-server/src/vue-build/`
 
 Build the server
 

@@ -1,10 +1,14 @@
 import api from '@/services/api'
 
 export default {
-  fetchSubmissions () {
-    return api().get('submissions')
+  fetchSubmissions (papercallToken) {
+    return api().post('submissions', {
+      token: papercallToken
+    })
   },
-  fetchEvent () {
-    return api().get('event')
+  fetchEvent (papercallToken) {
+    return api().post('event', {
+      token: papercallToken
+    })
   }
 }

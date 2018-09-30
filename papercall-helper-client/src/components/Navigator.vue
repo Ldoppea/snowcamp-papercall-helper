@@ -1,12 +1,14 @@
 <template>
   <div class="navigator">
+    <input v-model="apiToken" placeholder="Papercall API Token" v-on:keyup.enter="submit">
+    <button v-on:click="submit">Load data</button>
     <div id="nav" v-if="isLoaded">
       <router-link to="/">Authors</router-link> |
       <router-link to="/languages">Languages</router-link> |
       <router-link to="/tags">Tags</router-link>
     </div>
     <router-view v-if="isLoaded"/>
-    <div class="loading-spinner" v-if="!isLoaded">
+    <div class="loading-spinner" v-if="isLoading">
       <atom-spinner
         :animation-duration="1000"
         :size="60"
@@ -17,9 +19,7 @@
 </template>
 
 <script>
-import * as mutations from '@/store/mutation-types'
-
-import PapercallService from '@/services/papercall-service'
+import * as actions from '@/store/action-types'
 
 import { AtomSpinner } from 'epic-spinners'
 
@@ -28,37 +28,26 @@ export default {
   components: {
     AtomSpinner
   },
+  data () {
+    return {
+      apiToken: ''
+    }
+  },
   mounted () {
-    this.getSubmissions()
-    this.getEvent()
   },
   computed: {
+    isLoading () {
+      return this.$store.getters.isLoading
+    },
     isLoaded () {
-      return this.$store.getters.submissions.length !== 0
+      return this.$store.getters.submissions.length !== 0 && this.$store.getters.event !== undefined
     }
   },
   methods: {
-    async getSubmissions () {
-      console.log('reload submissions')
-      if (this.$store.getters.submissions.length === 0) {
-        console.log('load submissions')
-        const response = await PapercallService.fetchSubmissions()
-
-        this.$store.commit(mutations.INIT_SUBMISSIONS, {
-          submissions: response.data
-        })
-      }
-    },
-    async getEvent () {
-      console.log('reload event')
-      if (this.$store.getters.event === undefined) {
-        console.log('load event')
-        const response = await PapercallService.fetchEvent()
-
-        this.$store.commit(mutations.INIT_EVENT, {
-          event: response.data
-        })
-      }
+    submit () {
+      this.$store.dispatch(actions.ACTION_INIT_PAPERCALL_TOKEN, {
+        papercallToken: this.apiToken
+      })
     }
   }
 }

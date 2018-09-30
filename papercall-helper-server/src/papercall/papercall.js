@@ -2,9 +2,19 @@ const axios = require('axios')
 
 axios.defaults.baseURL = 'https://www.papercall.io/api/v1/'
 
+const getAxiosConfig = (papercallToken) => {
+  const config = {
+    headers: {
+      'Authorization' : papercallToken
+    }
+  }
+
+  return config
+}
+
 // Get X submissions from the event
-const getSubmissions = (numberOfSubmissions) => {
-  return axios.get(`submissions?per_page=${numberOfSubmissions}`)
+const getSubmissions = (numberOfSubmissions, config) => {
+  return axios.get(`submissions?per_page=${numberOfSubmissions}`, config)
     .then(response => {
       return response.data
     })
@@ -15,8 +25,8 @@ const getSubmissions = (numberOfSubmissions) => {
 }
 
 // Get feedbacks by submissionId
-const getSubmissionFeedback = (submissionId) => {
-  return axios.get(`submissions/${submissionId}/feedback`)
+const getSubmissionFeedback = (submissionId, config) => {
+  return axios.get(`submissions/${submissionId}/feedback`, config)
     .then(response => {
       return response.data
     })
@@ -27,8 +37,8 @@ const getSubmissionFeedback = (submissionId) => {
 }
 
 // Fill specified submission object with its feedbacks
-const retrieveFeedbackIntoSubmission = (submission) => {
-  return getSubmissionFeedback(submission.id)
+const retrieveFeedbackIntoSubmission = (submission, config) => {
+  return getSubmissionFeedback(submission.id, config)
     .then(feedback => {
       return {
         ...submission,
@@ -38,14 +48,14 @@ const retrieveFeedbackIntoSubmission = (submission) => {
 }
 
 // Fill all specified submissions objects with their feedbacks 
-const retrieveFeedbackIntoSubmissions = (submissions) => {
+const retrieveFeedbackIntoSubmissions = (submissions, config) => {
   return Promise.all(
-    submissions.map(retrieveFeedbackIntoSubmission)
+    submissions.map(submission => retrieveFeedbackIntoSubmission(submission, config))
   )
 }
 
-const getEvent = () => {
-  return axios.get(`event`)
+const getEvent = (config) => {
+  return axios.get(`event`, config)
     .then(response => {
       return response.data
     })
@@ -55,10 +65,18 @@ const getEvent = () => {
     })
 }
 
+const getApi = (papercallToken) => {
+  const axiosConfig = getAxiosConfig(papercallToken)
+  console.log({axiosConfig})
+  return {
+    getEvent: () => getEvent(axiosConfig),
+    getSubmissions: (numberOfSubmissions) => getSubmissions(numberOfSubmissions, axiosConfig),
+    getSubmissionFeedback: (submissionId) => getSubmissionFeedback(submissionId, axiosConfig),
+    retrieveFeedbackIntoSubmission: (submission) => retrieveFeedbackIntoSubmission(submission, axiosConfig),
+    retrieveFeedbackIntoSubmissions: (submissions) => retrieveFeedbackIntoSubmissions(submissions, axiosConfig)
+  }
+}
+
 module.exports = {
-  getEvent,
-  getSubmissions,
-  getSubmissionFeedback,
-  retrieveFeedbackIntoSubmission,
-  retrieveFeedbackIntoSubmissions,
+  getApi
 }
