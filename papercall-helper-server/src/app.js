@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -37,4 +38,6 @@ app.post('/event', (req, res) => {
 
 app.use(express.static('src/static'))
 
-app.listen(process.env.PORT || 8081)
+const port = process.env.PORT || 8081
+console.log('serving files on port', port)
+app.listen(port)
