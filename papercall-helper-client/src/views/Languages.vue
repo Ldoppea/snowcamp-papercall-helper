@@ -2,6 +2,14 @@
   <div class="languages-view">
     <h1>Languages</h1>
 
+    <div>
+      <ul>
+        <li>French - {{numberOfFrenchSubmissions}}</li>
+        <li>English - {{numberOfEnglishSubmissions}}</li>
+        <li>French or English - {{numberOfBothSubmissions}}</li>
+      </ul>
+    </div>
+
     <h2 v-if="submissionsNone.length > 0">NO LANGUAGE SET - {{numberOfNoneSubmissions}}</h2>
     <author v-for="author in submissionsNone" :key="'none' +author.speakerName" :authorData="author" showLanguages></author>
 
