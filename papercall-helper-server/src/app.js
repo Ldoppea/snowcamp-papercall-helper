@@ -37,6 +37,7 @@ app.post('/event', (req, res) => {
 })
 
 app.use(express.static('src/static'))
+app.use('/papercall', express.static('src/static'))
 
 const port = process.env.PORT || 8081
 console.log('serving files on port', port)
