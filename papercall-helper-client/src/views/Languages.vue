@@ -4,6 +4,7 @@
 
     <div>
       <ul>
+        <li>NO LANGUAGE SET - {{numberOfNoneSubmissions}}</li>
         <li>French - {{numberOfFrenchSubmissions}}</li>
         <li>English - {{numberOfEnglishSubmissions}}</li>
         <li>French or English - {{numberOfBothSubmissions}}</li>
