@@ -54,6 +54,36 @@ const retrieveFeedbackIntoSubmissions = (submissions, config) => {
   )
 }
 
+// Get ratings by submissionId
+const getSubmissionRatings = (submissionId, config) => {
+  return axios.get(`submissions/${submissionId}/ratings`, config)
+    .then(response => {
+      return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      throw error
+    })
+}
+
+// Fill specified submission object with its ratings
+const retrieveRatingsIntoSubmission = (submission, config) => {
+  return getSubmissionRatings(submission.id, config)
+    .then(ratings => {
+      return {
+        ...submission,
+        ratings
+      }
+    })
+}
+
+// Fill all specified submissions objects with their ratings 
+const retrieveRatingsIntoSubmissions = (submissions, config) => {
+  return Promise.all(
+    submissions.map(submission => retrieveRatingsIntoSubmission(submission, config))
+  )
+}
+
 const getEvent = (config) => {
   return axios.get(`event`, config)
     .then(response => {
@@ -73,7 +103,10 @@ const getApi = (papercallToken) => {
     getSubmissions: (numberOfSubmissions) => getSubmissions(numberOfSubmissions, axiosConfig),
     getSubmissionFeedback: (submissionId) => getSubmissionFeedback(submissionId, axiosConfig),
     retrieveFeedbackIntoSubmission: (submission) => retrieveFeedbackIntoSubmission(submission, axiosConfig),
-    retrieveFeedbackIntoSubmissions: (submissions) => retrieveFeedbackIntoSubmissions(submissions, axiosConfig)
+    retrieveFeedbackIntoSubmissions: (submissions) => retrieveFeedbackIntoSubmissions(submissions, axiosConfig),
+    getSubmissionRatings: (submissionId) => getSubmissionRatings(submissionId, axiosConfig),
+    retrieveRatingsIntoSubmission: (submission) => retrieveRatingsIntoSubmission(submission, axiosConfig),
+    retrieveRatingsIntoSubmissions: (submissions) => retrieveRatingsIntoSubmissions(submissions, axiosConfig)
   }
 }
 

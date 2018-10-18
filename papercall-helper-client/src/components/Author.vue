@@ -5,11 +5,16 @@
       <span class="feedback-indicator" v-if="aknowledgeFeedback && authorData.hasFeedback">received Feedback</span>
     </div>
     <submission v-for="submission in authorData.submissions" :key="submission.id" :submissionData="submission" :showTags="showTags" :showLanguages="showLanguages"></submission>
+    
+    <div class="media-container" v-if="authorData.media && authorData.media.length > 0">
+      <media v-for="media in authorData.media" :key="media.id" :url="media"></media>
+    </div>
   </div>
 </template>
 
 <script>
 import Submission from '@/components/Submission'
+import Media from '@/components/Media'
 
 export default {
   name: 'author',
@@ -20,7 +25,8 @@ export default {
     showLanguages: Boolean
   },
   components: {
-    Submission
+    Submission,
+    Media
   },
   data () {
     return {
@@ -51,6 +57,12 @@ export default {
       display: block;
       float: right;
     }
+  }
+
+  .media-container {
+    background: #cccccc;
+    border: 1px solid #8b8b8b;
+    padding: 5px;
   }
 }
 </style>

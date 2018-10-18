@@ -31,6 +31,17 @@ export default {
         .map(submissionsHelpers.submissionToSubmissionLight)
 
       const submissionsByAuthor = submissionsHelpers.groupByAuthors(submissionsLight)
+        .map(author => {
+          return {
+            ...author,
+            media: author.submissions.flatMap(submission => submission.ratings)
+                .flatMap(rating => rating.comments.split('\n'))
+                .filter(commentLine => commentLine.startsWith('PreviousTalk: '))
+                .map(commentLine => commentLine.replace('PreviousTalk: ', ''))
+          }
+        });
+
+      console.log(submissionsByAuthor.filter(sub => sub.media.length > 0))
 
       return submissionsByAuthor
     }

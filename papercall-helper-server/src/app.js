@@ -16,6 +16,7 @@ app.post('/papercall/submissions', (req, res) => {
 
   papercallApi.getSubmissions(1000)
     .then(papercallApi.retrieveFeedbackIntoSubmissions)
+    .then(papercallApi.retrieveRatingsIntoSubmissions)
     .then(submissions => {
       res.send(submissions)
     })

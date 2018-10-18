@@ -57,7 +57,8 @@ const submissionToSubmissionLight = (submission) => {
         body: feedback.body,
         creationDate: feedback.created_at
       }
-    })
+    }),
+    ratings: submission.ratings
   }
 }
 
