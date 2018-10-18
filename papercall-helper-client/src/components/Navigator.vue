@@ -34,6 +34,7 @@ export default {
     }
   },
   mounted () {
+    this.apiToken = localStorage.getItem('PAPERCALL_TOKEN')
   },
   computed: {
     isLoading () {
@@ -45,6 +46,7 @@ export default {
   },
   methods: {
     submit () {
+      localStorage.setItem('PAPERCALL_TOKEN', this.apiToken)
       this.$store.dispatch(actions.ACTION_INIT_PAPERCALL_TOKEN, {
         papercallToken: this.apiToken
       })
