@@ -44,8 +44,6 @@ export default {
           }
         });
 
-      console.log(submissionsByAuthor.filter(sub => sub.media.length > 0))
-
       return submissionsByAuthor
     }
   },
