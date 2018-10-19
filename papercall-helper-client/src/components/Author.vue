@@ -9,6 +9,9 @@
     <div class="media-container" v-if="authorData.media && authorData.media.length > 0">
       <media v-for="media in authorData.media" :key="media.id" :url="media"></media>
     </div>
+    <div class="no-media-container" v-if="authorData.media.length == 0 && authorData.noPreviousTalk">
+      No talk found on web
+    </div>
   </div>
 </template>
 
@@ -61,6 +64,11 @@ export default {
 
   .media-container {
     background: #cccccc;
+    border: 1px solid #8b8b8b;
+    padding: 5px;
+  }
+  .no-media-container {
+    background: #ba9797;
     border: 1px solid #8b8b8b;
     padding: 5px;
   }
