@@ -73,10 +73,10 @@ export default {
     }
   }
 }
-.university {
+.university .submission-format {
   color: #fffb00;
 }
-.conference {
+.conference .submission-format {
   color: #008bff;
 }
 </style>
