@@ -9,7 +9,7 @@
     <div class="media-container" v-if="authorData.media && authorData.media.length > 0">
       <media v-for="media in authorData.media" :key="media.id" :url="media"></media>
     </div>
-    <div class="no-media-container" v-if="authorData.media.length == 0 && authorData.noPreviousTalk">
+    <div class="no-media-container" v-if="(!authorData.media || (authorData.media && authorData.media.length == 0)) && authorData.noPreviousTalk">
       No talk found on web
     </div>
   </div>
