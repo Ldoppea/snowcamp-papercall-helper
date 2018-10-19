@@ -16,7 +16,9 @@ export default {
   },
   computed: {
     embedUrl() {
-      return this.url.replace('https://youtu.be/', 'https://www.youtube.com/embed/')
+      return this.url
+        .replace('https://youtu.be/', 'https://www.youtube.com/embed/')
+        .replace('https://vimeo.com/', 'https://player.vimeo.com/video/')
     }
   },
   mounted () {
