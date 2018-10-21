@@ -11,8 +11,8 @@
     <div class="loading-spinner" v-if="isLoading">
       <atom-spinner
         :animation-duration="1000"
-        :size="60"
-        :color="'#7acfff'"
+        :size="40"
+        :color="'#FF0000'"
       />
     </div>
   </div>
@@ -59,7 +59,7 @@ export default {
 .loading-spinner {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 10px;
 }
 #nav {
   text-align: left;
