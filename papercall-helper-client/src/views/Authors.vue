@@ -44,7 +44,7 @@ export default {
             warnings: author.submissions.flatMap(submission => submission.ratings)
               .flatMap(rating => rating.comments.split('\n'))
               .filter(commentLine => commentLine.startsWith('Warning: '))
-              .map(commentLine => commentLine.replace('Warning: ', '')),
+              .map(commentLine => commentLine.replace('Warning: ', ''))
           }
         })
 

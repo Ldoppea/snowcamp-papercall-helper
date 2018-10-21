@@ -87,7 +87,7 @@ export default {
     submissionsNone () {
       return this.getSubmissionsByLanguage(submissionsHelpers.isNoLanguageSubmission)
     },
-    
+
     numberOfFrenchSubmissionsWorkshop () {
       return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isFrenchSubmission)
     },
@@ -100,7 +100,7 @@ export default {
     numberOfBothSubmissionsWorkshop () {
       return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isBothLanguagesSubmission)
     },
-    
+
     numberOfFrenchSubmissionsTalk () {
       return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isFrenchSubmission)
     },
@@ -112,7 +112,7 @@ export default {
     },
     numberOfBothSubmissionsTalk () {
       return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isBothLanguagesSubmission)
-    },
+    }
   },
   mounted () {
   },
