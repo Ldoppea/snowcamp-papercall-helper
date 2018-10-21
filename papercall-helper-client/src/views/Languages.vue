@@ -1,6 +1,6 @@
 <template>
   <div class="languages-view">
-    <h1>Languages</h1>
+    <h1>All</h1>
 
     <div>
       <ul>
@@ -8,6 +8,28 @@
         <li>French - {{numberOfFrenchSubmissions}}</li>
         <li>English - {{numberOfEnglishSubmissions}}</li>
         <li>French or English - {{numberOfBothSubmissions}}</li>
+      </ul>
+    </div>
+
+    <h1>Workshops</h1>
+
+    <div>
+      <ul>
+        <li>NO LANGUAGE SET - {{numberOfNoneSubmissionsWorkshop}}</li>
+        <li>French - {{numberOfFrenchSubmissionsWorkshop}}</li>
+        <li>English - {{numberOfEnglishSubmissionsWorkshop}}</li>
+        <li>French or English - {{numberOfBothSubmissionsWorkshop}}</li>
+      </ul>
+    </div>
+
+    <h1>Talks</h1>
+
+    <div>
+      <ul>
+        <li>NO LANGUAGE SET - {{numberOfNoneSubmissionsTalk}}</li>
+        <li>French - {{numberOfFrenchSubmissionsTalk}}</li>
+        <li>English - {{numberOfEnglishSubmissionsTalk}}</li>
+        <li>French or English - {{numberOfBothSubmissionsTalk}}</li>
       </ul>
     </div>
 
@@ -64,7 +86,33 @@ export default {
     },
     submissionsNone () {
       return this.getSubmissionsByLanguage(submissionsHelpers.isNoLanguageSubmission)
-    }
+    },
+    
+    numberOfFrenchSubmissionsWorkshop () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isFrenchSubmission)
+    },
+    numberOfEnglishSubmissionsWorkshop () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isEnglishSubmission)
+    },
+    numberOfNoneSubmissionsWorkshop () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isNoLanguageSubmission)
+    },
+    numberOfBothSubmissionsWorkshop () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isWorkshopSubmission, submissionsHelpers.isBothLanguagesSubmission)
+    },
+    
+    numberOfFrenchSubmissionsTalk () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isFrenchSubmission)
+    },
+    numberOfEnglishSubmissionsTalk () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isEnglishSubmission)
+    },
+    numberOfNoneSubmissionsTalk () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isNoLanguageSubmission)
+    },
+    numberOfBothSubmissionsTalk () {
+      return this.countSubmissionsByTypeAndLanguage(submissionsHelpers.isTalkSubmission, submissionsHelpers.isBothLanguagesSubmission)
+    },
   },
   mounted () {
   },
@@ -82,6 +130,12 @@ export default {
     },
     countSubmissionsByLanguage (languageFilter) {
       return this.$store.getters.submissions
+        .filter(languageFilter)
+        .length
+    },
+    countSubmissionsByTypeAndLanguage (typeFilter, languageFilter) {
+      return this.$store.getters.submissions
+        .filter(typeFilter)
         .filter(languageFilter)
         .length
     }

@@ -28,6 +28,14 @@ const isNoLanguageSubmission = (submission) => {
   return languages.length === 0
 }
 
+const isWorkshopSubmission = (submission) => {
+  return submission.talk.talk_format.startsWith('Workshop')
+}
+
+const isTalkSubmission = (submission) => {
+  return submission.talk.talk_format.startsWith('Talk')
+}
+
 const groupByAuthors = (submissions) => {
   const groupedSubmissions = groupBy(submissions, 'speakerName')
 
@@ -71,5 +79,7 @@ export default {
   isBothLanguagesSubmission,
   isNoLanguageSubmission,
   groupByAuthors,
-  submissionToSubmissionLight
+  submissionToSubmissionLight,
+  isWorkshopSubmission,
+  isTalkSubmission
 }
