@@ -12,6 +12,10 @@
     <div class="no-media-container" v-if="(!authorData.media || (authorData.media && authorData.media.length == 0)) && authorData.noPreviousTalk">
       No talk found on web
     </div>
+
+    <div class="warning-container" v-if="authorData.warnings && authorData.warnings.length > 0">
+      <div v-for="warning in authorData.warnings" :key="warning">/!\ {{warning}}</div>
+    </div>
   </div>
 </template>
 
@@ -71,6 +75,12 @@ export default {
     background: #ba9797;
     border: 1px solid #8b8b8b;
     padding: 5px;
+  }
+  .warning-container {
+    background: #ff0000;
+    border: 1px solid #8b8b8b;
+    padding: 5px;
+    color: white;
   }
 }
 </style>

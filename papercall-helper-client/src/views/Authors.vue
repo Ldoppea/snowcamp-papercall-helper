@@ -40,7 +40,11 @@ export default {
               .map(commentLine => commentLine.replace('PreviousTalk: ', '')),
             noPreviousTalk: author.submissions.flatMap(submission => submission.ratings)
               .flatMap(rating => rating.comments.split('\n'))
-              .some(commentLine => commentLine.startsWith('NoPreviousTalk'))
+              .some(commentLine => commentLine.startsWith('NoPreviousTalk')),
+            warnings: author.submissions.flatMap(submission => submission.ratings)
+              .flatMap(rating => rating.comments.split('\n'))
+              .filter(commentLine => commentLine.startsWith('Warning: '))
+              .map(commentLine => commentLine.replace('Warning: ', '')),
           }
         })
 
