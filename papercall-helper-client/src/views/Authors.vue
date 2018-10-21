@@ -35,14 +35,14 @@ export default {
           return {
             ...author,
             media: author.submissions.flatMap(submission => submission.ratings)
-                .flatMap(rating => rating.comments.split('\n'))
-                .filter(commentLine => commentLine.startsWith('PreviousTalk: '))
-                .map(commentLine => commentLine.replace('PreviousTalk: ', '')),
+              .flatMap(rating => rating.comments.split('\n'))
+              .filter(commentLine => commentLine.startsWith('PreviousTalk: '))
+              .map(commentLine => commentLine.replace('PreviousTalk: ', '')),
             noPreviousTalk: author.submissions.flatMap(submission => submission.ratings)
-                .flatMap(rating => rating.comments.split('\n'))
-                .some(commentLine => commentLine.startsWith('NoPreviousTalk'))
+              .flatMap(rating => rating.comments.split('\n'))
+              .some(commentLine => commentLine.startsWith('NoPreviousTalk'))
           }
-        });
+        })
 
       return submissionsByAuthor
     }
