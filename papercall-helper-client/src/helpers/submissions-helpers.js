@@ -72,6 +72,19 @@ const submissionToSubmissionLight = (submission) => {
   }
 }
 
+const getSubmissionsTagContent = (submissions, tagName) => {
+  return submissions.flatMap(submission => submission.ratings)
+    .flatMap(rating => rating.comments.split('\r\n'))
+    .filter(commentLine => commentLine.startsWith(`${tagName}: `))
+    .map(commentLine => commentLine.replace(`${tagName}: `, ''))
+}
+
+const getSubmissionsTagPresence = (submissions, tagName) => {
+  return submissions.flatMap(submission => submission.ratings)
+    .flatMap(rating => rating.comments.split('\r\n'))
+    .some(commentLine => commentLine.startsWith(tagName))
+}
+
 export default {
   languageTagFilter,
   isFrenchSubmission,
@@ -81,5 +94,7 @@ export default {
   groupByAuthors,
   submissionToSubmissionLight,
   isWorkshopSubmission,
-  isTalkSubmission
+  isTalkSubmission,
+  getSubmissionsTagContent,
+  getSubmissionsTagPresence
 }

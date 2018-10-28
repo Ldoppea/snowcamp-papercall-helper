@@ -34,17 +34,9 @@ export default {
         .map(author => {
           return {
             ...author,
-            media: author.submissions.flatMap(submission => submission.ratings)
-              .flatMap(rating => rating.comments.split('\n'))
-              .filter(commentLine => commentLine.startsWith('PreviousTalk: '))
-              .map(commentLine => commentLine.replace('PreviousTalk: ', '')),
-            noPreviousTalk: author.submissions.flatMap(submission => submission.ratings)
-              .flatMap(rating => rating.comments.split('\n'))
-              .some(commentLine => commentLine.startsWith('NoPreviousTalk')),
-            warnings: author.submissions.flatMap(submission => submission.ratings)
-              .flatMap(rating => rating.comments.split('\n'))
-              .filter(commentLine => commentLine.startsWith('Warning: '))
-              .map(commentLine => commentLine.replace('Warning: ', ''))
+            media: submissionsHelpers.getSubmissionsTagContent(author.submissions, 'PreviousTalk'),
+            noPreviousTalk: submissionsHelpers.getSubmissionsTagPresence(author.submissions, 'NoPreviousTalk'),
+            warnings: submissionsHelpers.getSubmissionsTagContent(author.submissions, 'Warning')
           }
         })
 

@@ -5,7 +5,8 @@
     <div id="nav" v-if="isLoaded">
       <router-link to="/">Authors</router-link> |
       <router-link to="/languages">Languages</router-link> |
-      <router-link to="/tags">Tags</router-link>
+      <router-link to="/tags">Tags</router-link> |
+      <router-link to="/travelers">Travelers</router-link>
     </div>
     <router-view v-if="isLoaded"/>
     <div class="loading-spinner" v-if="isLoading">

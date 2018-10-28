@@ -16,6 +16,12 @@
     <div class="warning-container" v-if="authorData.warnings && authorData.warnings.length > 0">
       <div v-for="warning in authorData.warnings" :key="warning">/!\ {{warning}}</div>
     </div>
+
+    <div class="financial-container" v-if="showFinancial">
+      <div v-if="authorData.financialOk.includes('Yes')" class="financial-ok">Is financial OK</div>
+      <div v-if="authorData.financialOk.includes('No')" class="financial-nok">Is not financial OK</div>
+      <div v-if="authorData.financialOk.includes('Maybe')" class="financial-maybe">Should be financial OK</div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +35,8 @@ export default {
     authorData: Object,
     aknowledgeFeedback: Boolean,
     showTags: Boolean,
-    showLanguages: Boolean
+    showLanguages: Boolean,
+    showFinancial: Boolean
   },
   components: {
     Submission,
@@ -81,6 +88,22 @@ export default {
     border: 1px solid #8b8b8b;
     padding: 5px;
     color: white;
+  }
+  .financial-ok,
+  .financial-nok,
+  .financial-maybe {
+    border: 1px solid #8b8b8b;
+    padding: 5px;
+    color: white;
+  }
+  .financial-ok {
+    background: green;
+  }
+  .financial-nok {
+    background: red;
+  }
+  .financial-maybe {
+    background: orange;
   }
 }
 </style>
