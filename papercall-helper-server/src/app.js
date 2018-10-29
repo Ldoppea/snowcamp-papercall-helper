@@ -11,7 +11,7 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.post('/papercall/submissions', (req, res) => {
+app.post('/submissions', (req, res) => {
   const papercallApi = papercall.getApi(req.body.token)
 
   papercallApi.getSubmissions(1000)
@@ -25,7 +25,7 @@ app.post('/papercall/submissions', (req, res) => {
     })
 })
 
-app.post('/papercall/event', (req, res) => {
+app.post('/event', (req, res) => {
   const papercallApi = papercall.getApi(req.body.token)
 
   papercallApi.getEvent()
