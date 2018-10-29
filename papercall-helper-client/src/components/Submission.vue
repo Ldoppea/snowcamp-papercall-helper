@@ -1,5 +1,11 @@
 <template>
-  <div class="submission" :class="(submissionData.isConference? 'conference' : 'university')">
+  <div class="submission" :class="[submissionData.isConference ? 'conference' : 'university', filterByEmail && hasBeenRated ? 'rated-submission' : '']">
+    <div class="rating">
+      <span class="rating-label">Your rating </span>
+      <div class="rating-stars">
+        <star-rating v-if="hasBeenRated" :rating="userRating" :increment="0.01" :fixed-points="2" :star-size="20" :show-rating="false" read-only></star-rating>
+      </div>
+    </div>
     <a class="submission-link" :href="'https://www.papercall.io/cfps/1343/submissions/' + submissionData.id">{{submissionData.talkName}}</a>
     <span class="submission-format"> : {{submissionData.isConference ? 'Talk' : 'Workshop'}}</span>
     <div class="languages" v-if="showLanguages && submissionData.languages !== undefined && submissionData.languages.length > 0">
@@ -19,6 +25,8 @@
 </template>
 
 <script>
+import StarRating from 'vue-star-rating'
+
 export default {
   name: 'submission',
   props: {
@@ -26,11 +34,30 @@ export default {
     showTags: Boolean,
     showLanguages: Boolean
   },
+  components: {
+    StarRating
+  },
   data () {
     return {
     }
   },
   computed: {
+    filterByEmail () {
+      return this.$store.getters.filterByEmail
+    },
+    hasBeenRated () {
+      return this.submissionData.ratings.some(rating => rating.user.email === this.$store.getters.papercallEmail)
+    },
+    userRating () {
+      let ratingValue = 0
+      const ratingString = this.submissionData.ratings.find(rating => rating.user.email === this.$store.getters.papercallEmail)
+
+      if (ratingString) {
+        ratingValue = parseFloat(ratingString.value)
+      }
+
+      return ratingValue / 20
+    }
   },
   mounted () {
   },
@@ -78,5 +105,22 @@ export default {
 }
 .conference .submission-format {
   color: #008bff;
+}
+
+.rated-submission a {
+  opacity: 0.2;
+}
+
+.rating {
+  float: right;
+
+  .rating-label {
+    font-size: 10px;
+    color: grey;
+  }
+
+  .rating-stars {
+    display: inline-block;
+  }
 }
 </style>
