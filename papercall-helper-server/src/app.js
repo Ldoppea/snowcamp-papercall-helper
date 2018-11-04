@@ -15,13 +15,22 @@ app.post('/submissions', (req, res) => {
   const papercallApi = papercall.getApi(req.body.token)
 
   papercallApi.getSubmissions(1000)
+    .catch(error => {
+      console.log('Error retrieving Submissions', error);
+      res.status(500).send(error)
+    })
     .then(papercallApi.retrieveFeedbackIntoSubmissions)
+    .catch(error => {
+      console.log('Error retrieving Feedbacks', error);
+      res.status(500).send(error)
+    })
     .then(papercallApi.retrieveRatingsIntoSubmissions)
+    .catch(error => {
+      console.log('Error retrieving Ratings', error);
+      res.status(500).send(error)
+    })
     .then(submissions => {
       res.send(submissions)
-    })
-    .catch(error => {
-      res.status(500).send(error)
     })
 })
 
@@ -33,6 +42,7 @@ app.post('/event', (req, res) => {
       res.send(event)
     })
     .catch(error => {
+      console.log('Error retrieving Event', error);
       res.status(500).send(error)
     })
 })

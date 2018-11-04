@@ -1,6 +1,10 @@
 const axios = require('axios')
+const PromiseBb = require("bluebird");
+
+const MAX_CONCURRENT = 20
 
 axios.defaults.baseURL = 'https://www.papercall.io/api/v1/'
+axios.defaults.timeout = 100000
 
 const getAxiosConfig = (papercallToken) => {
   const config = {
@@ -26,6 +30,7 @@ const getSubmissions = (numberOfSubmissions, config) => {
 
 // Get feedbacks by submissionId
 const getSubmissionFeedback = (submissionId, config) => {
+  console.log('getSubmissionFeedback', submissionId)
   return axios.get(`submissions/${submissionId}/feedback`, config)
     .then(response => {
       return response.data
@@ -45,17 +50,28 @@ const retrieveFeedbackIntoSubmission = (submission, config) => {
         feedback
       }
     })
+    .catch(error => {
+      console.log(error)
+      throw error
+    })
 }
 
 // Fill all specified submissions objects with their feedbacks 
 const retrieveFeedbackIntoSubmissions = (submissions, config) => {
-  return Promise.all(
-    submissions.map(submission => retrieveFeedbackIntoSubmission(submission, config))
+  return PromiseBb.map(
+    submissions,
+    submission => retrieveFeedbackIntoSubmission(submission, config),
+    { concurrency: MAX_CONCURRENT }
   )
+  .catch(error => {
+    console.log(error)
+    throw error
+  })
 }
 
 // Get ratings by submissionId
 const getSubmissionRatings = (submissionId, config) => {
+  console.log('getSubmissionRatings', submissionId)
   return axios.get(`submissions/${submissionId}/ratings`, config)
     .then(response => {
       return response.data
@@ -75,13 +91,23 @@ const retrieveRatingsIntoSubmission = (submission, config) => {
         ratings
       }
     })
+    .catch(error => {
+      console.log(error)
+      throw error
+    })
 }
 
 // Fill all specified submissions objects with their ratings 
 const retrieveRatingsIntoSubmissions = (submissions, config) => {
-  return Promise.all(
-    submissions.map(submission => retrieveRatingsIntoSubmission(submission, config))
+  return PromiseBb.map(
+    submissions,
+    submission => retrieveRatingsIntoSubmission(submission, config),
+    { concurrency: MAX_CONCURRENT }
   )
+  .catch(error => {
+    console.log(error)
+    throw error
+  })
 }
 
 const getEvent = (config) => {
