@@ -68,7 +68,8 @@ const submissionToSubmissionLight = (submission) => {
     }),
     ratings: submission.ratings,
     isConference: submission.talk.talk_format.startsWith('Talk'),
-    isUniversity: submission.talk.talk_format.startsWith('Workshop')
+    isUniversity: submission.talk.talk_format.startsWith('Workshop'),
+    status: submission.state
   }
 }
 

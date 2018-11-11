@@ -16,11 +16,32 @@ const getAxiosConfig = (papercallToken) => {
   return config
 }
 
-// Get X submissions from the event
-const getSubmissions = (numberOfSubmissions, config) => {
-  return axios.get(`submissions?per_page=${numberOfSubmissions}`, config)
+// Get X submissions from the event, by submission state
+const getSubmissionsByState = (numberOfSubmissions, state, config) => {
+  return axios.get(`submissions?per_page=${numberOfSubmissions}&state=${state}`, config)
     .then(response => {
       return response.data
+    })
+    .catch(error => {
+      console.log(error)
+      throw error
+    })
+}
+
+// Get X submissions from the event
+const getSubmissions = (numberOfSubmissions, config) => {
+  return Promise.all([
+    getSubmissionsByState(numberOfSubmissions, 'submitted', config),
+    getSubmissionsByState(numberOfSubmissions, 'accepted', config),
+    getSubmissionsByState(numberOfSubmissions, 'rejected', config),
+    getSubmissionsByState(numberOfSubmissions, 'waitlist', config)
+  ]).then(([submitted, accepted, rejected, waitlist]) => {
+      return [
+        ...submitted,
+        ...accepted,
+        ...rejected,
+        ...waitlist
+      ]
     })
     .catch(error => {
       console.log(error)

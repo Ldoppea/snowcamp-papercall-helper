@@ -1,10 +1,10 @@
 <template>
-  <div class="author">
+  <div class="author" v-show="filteredSubmissions.length > 0">
     <div class="author-header">
       <span><b>{{ authorData.speakerName }}</b> ({{authorData.submissions.length}} submissions)</span>
       <span class="feedback-indicator" v-if="aknowledgeFeedback && authorData.hasFeedback">received Feedback</span>
     </div>
-    <submission v-for="submission in authorData.submissions" :key="submission.id" :submissionData="submission" :showTags="showTags" :showLanguages="showLanguages"></submission>
+    <submission v-for="submission in filteredSubmissions" :key="submission.id" :submissionData="submission" :showTags="showTags" :showLanguages="showLanguages"></submission>
 
     <div class="media-container" v-if="authorData.media && authorData.media.length > 0">
       <media v-for="media in authorData.media" :key="media.id" :url="media"></media>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="warning-container" v-if="authorData.warnings && authorData.warnings.length > 0">
-      <div v-for="warning in authorData.warnings" :key="warning">/!\ {{warning}}</div>
+      <div v-for="warning in authorData.warnings" :key="warning.id">/!\ {{warning.value}}</div>
     </div>
 
     <div class="financial-container" v-if="showFinancial">
@@ -47,6 +47,16 @@ export default {
     }
   },
   computed: {
+    filters () {
+      return this.$store.getters.filterStatus
+        .filter(filter => filter.value === true)
+        .map(filter => filter.name)
+    },
+    filteredSubmissions () {
+      return this.authorData.submissions.filter(submission => {
+        return this.filters.includes(submission.status)
+      })
+    }
   },
   mounted () {
   },

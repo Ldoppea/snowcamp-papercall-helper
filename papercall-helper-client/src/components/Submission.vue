@@ -1,5 +1,5 @@
 <template>
-  <div class="submission" :class="[submissionData.isConference ? 'conference' : 'university', filterByEmail && hasBeenRated ? 'rated-submission' : '']">
+  <div class="submission" :class="[submissionData.isConference ? 'conference' : 'university', filterByEmail && hasBeenRated ? 'rated-submission' : '', 'status-' + submissionData.status]">
     <div class="rating">
       <span class="rating-label">Your rating </span>
       <div class="rating-stars">
@@ -8,6 +8,7 @@
     </div>
     <a class="submission-link" :href="'https://www.papercall.io/cfps/1343/submissions/' + submissionData.id">{{submissionData.talkName}}</a>
     <span class="submission-format"> : {{submissionData.isConference ? 'Talk' : 'Workshop'}}</span>
+    <span class="submission-status"> - {{submissionData.status}}</span>
     <div class="languages" v-if="showLanguages && submissionData.languages !== undefined && submissionData.languages.length > 0">
       <span v-for="language in submissionData.languages" :key="language" :class="'language-' + language" >
         {{language}}
@@ -105,6 +106,18 @@ export default {
 }
 .conference .submission-format {
   color: #008bff;
+}
+.status-submitted .submission-status {
+  color: grey;
+}
+.status-accepted .submission-status {
+  color: green;
+}
+.status-rejected .submission-status {
+  color: red;
+}
+.status-waitlist .submission-status {
+  color: orange;
 }
 
 .rated-submission a {
