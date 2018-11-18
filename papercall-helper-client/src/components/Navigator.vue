@@ -6,6 +6,14 @@
     <br />
     <label for="filterEmail">Filter rated by you</label>
     <input type="checkbox" id="filterEmail" v-model="filterByEmail">
+
+    <div>
+      <div v-for="status in statusList" :key="status.name">
+        <input type="checkbox" :name="'checkbox-status-' + status.name" @click="clickCb(status)" :checked="status.value"/>
+        <label :for="'checkbox-status-' + status.name">{{status.name}}</label>
+      </div>
+    </div>
+
     <div id="nav" v-if="isLoaded">
       <router-link to="/">Authors</router-link> |
       <router-link to="/languages">Languages</router-link> |
@@ -51,6 +59,9 @@ export default {
     isLoaded () {
       return this.$store.getters.submissions.length !== 0 && this.$store.getters.event !== undefined
     },
+    statusList () {
+      return this.$store.getters.filterStatus
+    },
     filterByEmail: {
       get () {
         return this.$store.getters.filterByEmail
@@ -67,6 +78,12 @@ export default {
       this.$store.dispatch(actions.ACTION_INIT_PAPERCALL_TOKEN, {
         papercallToken: this.apiToken,
         papercallEmail: this.emailAddress
+      })
+    },
+    clickCb (status) {
+      this.$store.commit(mutations.SET_STATUS_FILTER, {
+        statusName: status.name,
+        value: !status.value
       })
     }
   }
